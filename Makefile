@@ -18,11 +18,13 @@ genkey:
 	docker-compose exec -T laravel bash -c "php artisan key:generate"
 optimize:
 	docker-compose exec -T laravel bash -c "php artisan optimize"
-migrate:
+migrate-fresh:
 	docker-compose exec -T laravel bash -c "php artisan migrate:fresh"
 serve:
 	docker compose exec -T laravel bash -c "php artisan serve"
+migrate:
+    docker-compose exec -T laravel bash -c "php artisan make:migration $(filter-out $@,$(MAKECMDGOALS))"
 artisan:
-	docker compose exec -T laravel bash 
+    docker-compose exec -T laravel bash -c "php artisan $(subst ",\",$(filter-out $@,$(MAKECMDGOALS)))"
 
 
