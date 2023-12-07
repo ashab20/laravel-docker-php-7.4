@@ -24,7 +24,6 @@ services:
   webserver:
     depends_on:
       - laravel
-      - vue
     build:
       context: ./nginx
       dockerfile: Dockerfile
