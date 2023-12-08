@@ -1,7 +1,7 @@
 .PHONY: bash build dev show  
 
 build:
-	docker-compose build
+	docker-compose build --no-cache
 dev:
 	docker-compose up -d
 stop:
