@@ -1,0 +1,52 @@
+version: '3.7'
+services:
+
+  mysql:
+    image: mysql:8.0
+    container_name: mysql
+    restart: unless-stopped
+    platform: linux/x86_64
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-volumes:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_DATABASE: laravel
+
+    # PHPMyAdmin
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    restart: always
+    environment:
+      PMA_HOST: mysql
+    ports:
+      - "8080:80"
+
+  laravel-app:
+    build:
+      context: ./docker/php
+    container_name: laravel-app
+    volumes:
+      - ./laravel/:/home/source/main
+    working_dir: /home/source/main
+
+  nginx:
+    build:
+      context: ./docker/nginx
+    container_name: nginx-server
+    restart: always
+    ports:
+      - "8000:80"
+    depends_on:
+      - laravel-app
+    volumes:
+      - ./laravel/:/home/source/main
+
+volumes:
+  mysql-volumes:
+
+networks:
+  default:
+    name: laravel-app-network

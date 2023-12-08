@@ -14,17 +14,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
-Route::get('/user',function(){
-    return "Hello Upwork";
-   });
-
-
-
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return "Hello Upwork";
+    return $request->user();
 });
-
-Route::post('login', function () {
- return "this is login page";
-})->name('login');
