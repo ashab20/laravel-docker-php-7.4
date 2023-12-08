@@ -37,9 +37,10 @@ You can use these commands by running make <target> in your terminal. For exampl
 
 Other Command
 ### Build
-```
 bash
+```
 docker-compose build
+```
 
 
 ## BUILD
